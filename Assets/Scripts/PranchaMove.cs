@@ -7,7 +7,11 @@ public class PranchaMove : MonoBehaviour {
     public float velocidade;
     public float limite;
     public float retorno;
-	void Start () {
+    public AudioClip somMorte;
+    private Animator anim;
+    private Rigidbody rb;
+    private AudioSource audioSource;
+    void Start () {
 		
 	}
 	
