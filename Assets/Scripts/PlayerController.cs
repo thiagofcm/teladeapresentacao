@@ -21,33 +21,47 @@ public class PlayerController : MonoBehaviour {
     }
 	
 	void Update () {
-		if(Input.GetMouseButtonDown(0))
+        if (GameController.instancia.estado == Estado.Jogando || GameController.instancia.estado == Estado.AguardoComecar)
         {
-            anim.Play("pulando");
-            audioSource.PlayOneShot(somPulo);
-            rb.useGravity = true;
-            pulando = true;
+            if (Input.GetMouseButtonDown(0))
+            {
+                anim.Play("pulando");
+                audioSource.PlayOneShot(somPulo);
+                rb.useGravity = true;
+                pulando = true;
+                if (GameController.instancia.estado == Estado.AguardoComecar)
+                {
+                    GameController.instancia.PlayerComecou();
+                }
+            }
         }
 	}
 
     private void FixedUpdate()
     {
-        if (pulando)
+        if (GameController.instancia.estado == Estado.Jogando)
         {
-            pulando = false;
-            rb.velocity = Vector3.zero;
-            rb.AddForce(Vector3.up * ForcaDoPulo, ForceMode.Impulse); 
+            if (pulando)
+            {
+                pulando = false;
+                rb.velocity = Vector3.zero;
+                rb.AddForce(Vector3.up * ForcaDoPulo, ForceMode.Impulse);
+            }
         }
     }
 
     private void OnCollisionEnter(Collision outro)
     {
-        if(outro.gameObject.tag == "obstaculo")
+        if (GameController.instancia.estado == Estado.Jogando)
         {
-            rb.AddForce(new Vector3(-50f, 20f, 0f), ForceMode.Impulse);
-            rb.detectCollisions = false;
-            anim.Play("morrendo");
-            audioSource.PlayOneShot(somMorte);
+            if (outro.gameObject.tag == "obstaculo")
+            {
+                rb.AddForce(new Vector3(-50f, 20f, 0f), ForceMode.Impulse);
+                rb.detectCollisions = false;
+                anim.Play("morrendo");
+                audioSource.PlayOneShot(somMorte);
+                GameController.instancia.PlayerMorreu();
+            }
         }
     }
 
