@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour {
         {
             if (Input.GetMouseButtonDown(0))
             {
-                //anim.Play("pulando");
+                anim.Play("pulando");
                 audioSource.PlayOneShot(somPulo);
                 rb.useGravity = true;
                 pulando = true;
@@ -57,8 +57,7 @@ public class PlayerController : MonoBehaviour {
             if (outro.gameObject.tag == "obstaculo")
             {
                 rb.AddForce(new Vector3(-50f, 20f, 0f), ForceMode.Impulse);
-                rb.detectCollisions = false;
-                //anim.Play("morrendo");
+                anim.Play("morrendo");
                 audioSource.PlayOneShot(somMorte);
                 GameController.instancia.PlayerMorreu();
             }
