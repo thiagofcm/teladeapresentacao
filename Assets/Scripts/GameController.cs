@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -34,7 +33,7 @@ public class GameController : MonoBehaviour
     {
         while (GameController.instancia.estado == Estado.Jogando)
         {
-            Vector3 pos = new Vector3(7f, Random.Range(0.5f, 6f), 0f);
+            Vector3 pos = new Vector3(12f, Random.Range(0.5f, 8f), 0f);
             GameObject obj = Instantiate(obstaculo, pos, Quaternion.identity) as GameObject;
             Destroy(obj, tempoDestruicao);
             yield return new WaitForSeconds(espera);
