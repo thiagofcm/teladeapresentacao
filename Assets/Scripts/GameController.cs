@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
     public Estado estado { get; private set; }
     public GameObject menu;
-    public GameObject canvas;
-
+    public GameObject painelMenu;
+    private int pontos;
+    public Text txtPontos;
     public float espera;
     public float tempoDestruicao;
     public GameObject obstaculo;
@@ -46,11 +48,22 @@ public class GameController : MonoBehaviour
     {
         estado = Estado.Jogando;
         menu.SetActive(false);
-        canvas.SetActive(false);
+        painelMenu.SetActive(false);
+        painelMenu.SetActive(false);
+        atualizarPontos(0);
         StartCoroutine(GerarObstaculos());
     }   
     public void PlayerMorreu()
     {
         estado = Estado.GameOver;
+    }
+
+    private void atualizarPontos(int x) {
+        pontos = x;
+        txtPontos.text = "" + x;
+    }
+
+    public void acrescentarPontos (int x) {
+        atualizarPontos(pontos + x);
     }
 }
