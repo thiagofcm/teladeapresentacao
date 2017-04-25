@@ -12,6 +12,8 @@ public class GameController : MonoBehaviour
     public float espera;
     public float tempoDestruicao;
     public GameObject obstaculo;
+    public GameObject menuCamera;
+    public GameObject menuPanel;
 
     public static GameController instancia = null;
 
@@ -48,9 +50,8 @@ public class GameController : MonoBehaviour
     {
         estado = Estado.Jogando;
         menu.SetActive(false);
-        painelMenu.SetActive(false);
-        painelMenu.SetActive(false);
-        atualizarPontos(0);
+        menuCamera.SetActive(false);
+        menuPanel.SetActive(false);
         StartCoroutine(GerarObstaculos());
     }   
     public void PlayerMorreu()
