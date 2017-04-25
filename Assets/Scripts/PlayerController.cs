@@ -7,7 +7,8 @@ public class PlayerController : MonoBehaviour {
     public float ForcaDoPulo = 10f;
     public AudioClip somPulo;
     public AudioClip somMorte;
-
+    private Vector3 posicaoInicial;
+    private Quaternion rotacaoInicial;
     private Animator anim;
     private Rigidbody rb;
     private AudioSource audioSource;
@@ -17,6 +18,8 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
+        posicaoInicial = transform.localPosition;
+        rotacaoInicial = transform.localRotation;
         audioSource = GetComponent<AudioSource>();
     }
 	
@@ -64,4 +67,13 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+
+    public void recomecar()
+    {
+        rb.useGravity = false;
+        rb.velocity = Vector3.zero;
+        rb.detectCollisions = true;
+        transform.localPosition = posicaoInicial;
+        transform.localRotation = rotacaoInicial;
+    }
 }

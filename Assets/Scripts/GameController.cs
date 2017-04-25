@@ -14,6 +14,10 @@ public class GameController : MonoBehaviour
     public GameObject obstaculo;
     public GameObject menuCamera;
     public GameObject menuPanel;
+    public GameObject gameOverPanel;
+    public GameObject pontosPanel;
+    public Text txtMaiorPontuacao;
+
 
     public static GameController instancia = null;
 
@@ -34,6 +38,11 @@ public class GameController : MonoBehaviour
     void Start()
     {
         estado = Estado.AguardoComecar;
+        PlayerPrefs.SetInt("HighScore", 0);
+        menuCamera.SetActive(true);
+        menuPanel.SetActive(true);
+        gameOverPanel.SetActive(false);
+        pontosPanel.SetActive(false);
     }
     IEnumerator GerarObstaculos()
     {
@@ -49,14 +58,21 @@ public class GameController : MonoBehaviour
     public void PlayerComecou()
     {
         estado = Estado.Jogando;
-        menu.SetActive(false);
         menuCamera.SetActive(false);
         menuPanel.SetActive(false);
+        pontosPanel.SetActive(true);
+        acrescentarPontos(0);
         StartCoroutine(GerarObstaculos());
     }   
     public void PlayerMorreu()
     {
         estado = Estado.GameOver;
+        if (pontos > PlayerPrefs.GetInt("HighScore"))
+        {
+            PlayerPrefs.SetInt("HighScore", pontos);
+            txtMaiorPontuacao.text = "" + pontos;
+        }
+        gameOverPanel.SetActive(true);
     }
 
     private void atualizarPontos(int x) {
@@ -67,4 +83,16 @@ public class GameController : MonoBehaviour
     public void acrescentarPontos (int x) {
         atualizarPontos(pontos + x);
     }
+
+
+    public void PlayerVoltou()
+    {
+        estado = Estado.AguardoComecar;
+        menuCamera.SetActive(true);
+        menuPanel.SetActive(true);
+        gameOverPanel.SetActive(false);
+        pontosPanel.SetActive(false);
+        GameObject.Find("Zeca").GetComponent<PlayerController>().recomecar();
+    }
 }
+
